@@ -1,0 +1,17 @@
+autoload -U colors && colors
+
+export CLICOLOR=1
+
+export LSCOLORS=GxFxCxDxBxegedabagaced
+
+alias ls='ls -GFh'
+alias ll='ls -lah'
+alias la='ls -A'
+alias l='ls -CF'
+
+export GREP_OPTIONS='--color=auto'
+export GREP_COLOR='1;32'
+
+setopt PROMPT_SUBST
+
+PROMPT='%F{cyan}%n@%m%f %F{yellow}%~%f %F{green}➜%f '
