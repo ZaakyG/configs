@@ -1,6 +1,8 @@
 syntax on
 filetype plugin indent on
 
+set background=light
+
 set number
 set showmatch
 
@@ -11,6 +13,8 @@ set cindent
 
 set laststatus=2
 set statusline=%f\ %y\ %m\ %=%l:%c
+set statusline+=\ [%{searchcount().current}/%{searchcount().total}]
+nnoremap <silent> <CR> :nohlsearch<CR><CR>
 
 set hlsearch
 set incsearch
@@ -18,4 +22,4 @@ set incsearch
 set cursorline
 set cursorlineopt=number
 highlight LineNr ctermfg=Grey
-highlight CursorLineNr cterm=bold ctermfg=Blue
+highlight CursorLineNr cterm=bold ctermfg=White ctermbg=Black
