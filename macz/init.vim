@@ -1,9 +1,12 @@
 syntax on
 filetype plugin indent on
 
-set background=dark
+" Run automatic mode select
+autocmd VimEnter * call SetBackgroundFromOS()
+
+"set background=dark
 set termguicolors
-colorscheme vim
+colorscheme default
 
 augroup MyColors
     autocmd!
@@ -32,11 +35,7 @@ set incsearch
 
 set cursorline
 set cursorlineopt=number
-"set guicursor=n-v-c-i-r:block
-"set guicursor=n-v-c:block,i:block-blinkon200,r:block
 set guicursor=n-v-c:block,i:block-blinkon200-blinkoff150-blinkwait150,r:block
-"highlight LineNr ctermfg=Grey
-"highlight CursorLineNr cterm=bold ctermfg=White ctermbg=Black
 
 function! SetCursorColor(color)
     call chansend(v:stderr, "\033]12;" . a:color . "\007")
@@ -48,3 +47,12 @@ augroup CursorColor
     autocmd InsertEnter * call SetCursorColor("gray")
     autocmd InsertLeave * call SetCursorColor("white")
 augroup END
+
+function! SetBackgroundFromOS()
+    let l:mode = system("defaults read -g AppleInterfaceStyle 2>/dev/null")
+    if l:mode =~? "Dark"
+        set background=dark
+    else
+        set background=light
+    endif
+endfunction
