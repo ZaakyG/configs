@@ -1,3 +1,29 @@
+ua << EOF
+vim.opt.rtp:prepend("~/.local/share/nvim/lazy/lazy.nvim")
+require("lazy").setup({
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons",
+        "folke/which-key.nvim"
+    },
+})
+
+require('telescope').setup{
+    defaults = {
+            file_ignore_patterns = {"node_modules",
+            "%.git/"},
+            path_display = { "smart" }
+        }
+}
+require('which-key').setup{}
+EOF
+
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').git_files()<CR>
+nnoremap <leader>fa <cmd>lua require('telescope.builtin').find_files()<CR>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<CR>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<CR>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<CR>
+
 syntax on
 filetype plugin indent on
 
@@ -5,7 +31,7 @@ filetype plugin indent on
 autocmd VimEnter * call SetBackgroundFromOS()
 
 "set background=dark
-set termguicolors
+"set termguicolors
 colorscheme default
 
 augroup MyColors
@@ -52,7 +78,17 @@ function! SetBackgroundFromOS()
     let l:mode = system("defaults read -g AppleInterfaceStyle 2>/dev/null")
     if l:mode =~? "Dark"
         set background=dark
+        set cursorline
+        set cursorlineopt=number
+        set guicursor=n-v-c:block,i:block-blinkon200-blinkoff150-blinkwait150,r:block
+        set termguicolors
+
     else
+        colorscheme quiet
         set background=light
+        highlight LineNr guifg=#808080
+        highlight CursorLineNr gui=bold guifg=#ffffff guibg=#000000
+        highlight CursorLine guibg=#000000 guifg=#ffffff
+        "set background=light
     endif
 endfunction
